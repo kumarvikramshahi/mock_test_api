@@ -15,6 +15,7 @@ const app = express();
 const { ErrorMiddleware } = require('./common/Errors');
 const user = require('./routes/Users');
 const auth = require('./routes/Auth');
+const practicePaper = require('./routes/PracticePaper');
 
 // Parsers and CORS
 app.use(bodyParser.json());
@@ -39,6 +40,8 @@ app.get("/", (req, res) => {
 })
 // app.use('/auth', auth);
 app.use(user);
+app.use(practicePaper);
+
 
 // Default error handeler
 app.use((error, req, resp, next) => ErrorMiddleware(error, req, resp, next))
