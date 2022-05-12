@@ -6,7 +6,7 @@ const PracPapers = new Schema({
         type: String,
         required: true,
         lowercase: true,
-        enum: ["jee", "upsc", "jee advance", "bpsc"]
+        enum: ["jee", "upsc", "jee advance", "bpsc", 'ssc']
     },
     name: {
         type: String,

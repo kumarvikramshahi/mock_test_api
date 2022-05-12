@@ -70,6 +70,42 @@ exports.postPracticePaper = (req, res, next) => {
         .catch(err => next(err))
 }
 
+exports.editPracticePaper = (req, res, next) => {
+    const queryPaperId = req.query.paper_id;
+    const isPublic = req.query.is_Public;
+
+    const paperId = req.body.paper_id;
+    const examType = req.body.exam_type;
+    const name = req.body.name;
+    const maxMarks = req.body.max_marks;
+    const year = req.body.year;
+    const isPreviousYear = req.body.is_previous_year;
+
+    PracticePaper.updateOne(paperId ? { _id: paperId } : { _id: queryPaperId }, {
+        $set: {
+            ...(examType && { exam_type: examType }),
+            ...(name && { name: name }),
+            ...(maxMarks && { max_marks: maxMarks }),
+            ...(year && { year: year }),
+            ...(isPreviousYear && { is_previous_year: isPreviousYear }),
+            ...((isPublic !== undefined && isPublic !== null) && { is_Public: isPublic })
+        }
+    })
+        .then(result => {
+            if (!(result.matchedCount)) ThrowError("paper id not found", 404)
+            if (isPublic !== undefined && isPublic !== null) {
+                const status = isPublic ? 'PUBLIC' : 'PRIVATE';
+                res.status(200).json({ message: `Paper made ${status} successfully!` })
+            } else {
+                res.status(200).json({
+                    message: "Updated successfully!"
+                })
+            }
+        })
+        .catch(err => next(err))
+
+}
+
 exports.addQuestion = (req, res, next) => {
     const paperId = req.body._id;
     const question = req.body.question;
