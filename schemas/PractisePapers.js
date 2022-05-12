@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const questionCount = 1;
-
 const PracPapers = new Schema({
     exam_type: {
         type: String,
@@ -20,6 +18,7 @@ const PracPapers = new Schema({
     max_marks: { type: Number, required: true },
     year: { type: Number, required: false },
     is_previous_year: { type: Boolean, required: true },
+    is_Public: { type: Boolean, required: true },
     questions: [
         {
             q: { type: String, required: true },
