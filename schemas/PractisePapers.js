@@ -19,6 +19,7 @@ const PracPapers = new Schema({
     year: { type: Number, required: false },
     is_previous_year: { type: Boolean, required: true },
     is_Public: { type: Boolean, required: true },
+    instruction: { type: String, required: true },
     questions: [
         {
             q: { type: String, required: true },

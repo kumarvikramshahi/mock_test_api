@@ -9,7 +9,7 @@ exports.fetchPracticePaper = (req, res, next) => {
         PracticePaper.findOne({ _id: paperId })
             .then(data => {
                 if (!data) ThrowError("paper not found!", 404);
-                res.status(200).json({ result: data });
+                res.status(200).json({ data: data });
             })
             .catch(err => next(err))
     }
@@ -71,34 +71,32 @@ exports.postPracticePaper = (req, res, next) => {
 }
 
 exports.editPracticePaper = (req, res, next) => {
-    const queryPaperId = req.query.paper_id;
-    const isPublic = req.query.is_Public;
-
     const paperId = req.body.paper_id;
     const examType = req.body.exam_type;
     const name = req.body.name;
     const maxMarks = req.body.max_marks;
     const year = req.body.year;
     const isPreviousYear = req.body.is_previous_year;
+    const isPublic = req.body.is_Public;
 
-    PracticePaper.updateOne(paperId ? { _id: paperId } : { _id: queryPaperId }, {
+    PracticePaper.findByIdAndUpdate(paperId, {
         $set: {
             ...(examType && { exam_type: examType }),
             ...(name && { name: name }),
             ...(maxMarks && { max_marks: maxMarks }),
             ...(year && { year: year }),
             ...(isPreviousYear && { is_previous_year: isPreviousYear }),
-            ...((isPublic !== undefined && isPublic !== null) && { is_Public: isPublic })
-        }
+            ...(isPublic !== undefined && isPublic !== null && { is_Public: isPublic })
+        }, new: true
     })
         .then(result => {
-            if (!(result.matchedCount)) ThrowError("paper id not found", 404)
+            if (!(result)) ThrowError("paper id not found", 404)
             if (isPublic !== undefined && isPublic !== null) {
                 const status = isPublic ? 'PUBLIC' : 'PRIVATE';
                 res.status(200).json({ message: `Paper made ${status} successfully!` })
             } else {
                 res.status(200).json({
-                    message: "Updated successfully!"
+                    message: "Updated successfully!",
                 })
             }
         })
