@@ -4,7 +4,7 @@
 
 const config = {
     databaseConnectionString:
-        `mongodb+srv://kvsCusat:Kumarvikram*293@cluster0.tphmm.mongodb.net/Mock_test?retryWrites=true&w=majority`,
+        `mongodb+srv://kvsCusat:xBTN8nRohWLOFh17@cluster0.tphmm.mongodb.net/Mock_test?retryWrites=true&w=majority`,
 }
 
 module.exports = config;
