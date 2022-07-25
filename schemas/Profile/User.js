@@ -13,12 +13,7 @@ const userProfile = new Schema({
     email: { type: String, required: true, unique: true, trim: true },
     mobileNo: { type: Number, required: true, unique: true, },
     password: { type: String, required: true },
-    profile_Pic: { type: String },
-    educational_details: {
-        education_level: { type: String },
-        degree: { type: String },
-    },
-    contest_sessions: [{
+    papaer: [{
         type: String,
         trim: true,
         minlength: [24, "Invalid user ID"],
