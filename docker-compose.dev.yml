@@ -1,0 +1,15 @@
+version: '3'
+services:
+  mocktest_backend:
+    build:
+      context: .
+      args:
+        NODE_ENV: development
+    volumes:
+      - ./:/mock_test_backend
+      - /mock_test_backend/node_modules
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./.env.local
+    command: npm run dev
